@@ -1,0 +1,29 @@
+#copy file from a directory and save them in multiple directory
+import os
+import shutil
+
+
+data_file="/media/priyanshu-vaaan/a5000_2/EBIN TRAIN DATA/VIDS_TRAINING_16MARCH"
+
+
+
+count=0
+prev_count=0
+New_file_no=0
+for filename in os.listdir(data_file):
+    os.chdir(data_file)
+    if filename.endswith("jpg"):
+        file=filename.split(".")[0]
+        save_data="/media/priyanshu-vaaan/a5000_2/data_test/{}/".format(New_file_no)
+        if not os.path.exists(save_data):
+            os.mkdir(save_data) 
+        
+        os.rename("{}.jpg".format(file),"{}.jpg".format(count))
+        os.rename("{}.txt".format(file),"{}.txt".format(count))
+        shutil.copyfile("{}.jpg".format(count),(os.path.join(save_data,"{}.jpg".format(count))))
+        shutil.copyfile("{}.txt".format(count),(os.path.join(save_data,"{}.txt".format(count))))
+        count+=1
+    if count-prev_count == 10000:
+        New_file_no+=1
+        prev_count=count
+    
